@@ -1,0 +1,30 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+annotations:
+  method: Docker build
+metadata:
+  labels:
+    template: "slack-youtube-cmd"
+    app: slack-youtube-cmd
+  name: slack-youtube-cmd
+spec:
+  replicas: 1
+  revisionHistoryLimit: 5
+  selector:
+    app: slack-youtube-cmd
+    deploymentconfig: slack-youtube-cmd
+    name: slack-youtube-cmd
+  template:
+    metadata:
+      labels:
+        name: slack-youtube-cmd
+        app: slack-youtube-cmd
+        deploymentconfig: slack-youtube-cmd
+    spec:
+      containers:
+        - image: slack-youtube-cmd
+          name: slack-youtube-cmd
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              protocol: TCP
